@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test-lint-scan:
+    name: Lint → Test → Bandit
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Lint (flake8)
+      run: flake8 .
+
+    - name: Run tests (pytest)
+      run: pytest --maxfail=1 --disable-warnings -q
+
+    - name: Run Bandit (security scan) and fail on HIGH findings
+      run: |
+        pip install bandit
+        bandit -r . -f json -o bandit.json || true
+        python - <<'PY'
+import json, sys
+with open('bandit.json') as f:
+    d = json.load(f)
+high = [i for i in d.get('results', []) if i.get('issue_severity') == 'HIGH']
+if high:
+    print("Bandit HIGH findings:")
+    for h in high:
+        print(f"- {h.get('issue_text')} ({h.get('filename')}:{h.get('line_number')})")
+    sys.exit(1)
+print("No HIGH bandit issues")
+PY

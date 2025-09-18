@@ -1,0 +1,7 @@
+fastapi
+uvicorn[standard]
+pytest
+pytest-asyncio
+httpx
+flake8
+bandit
