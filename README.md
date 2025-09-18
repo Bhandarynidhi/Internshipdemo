@@ -4,5 +4,5 @@ Endpoints:
 - GET /hello -> { "message": "Hello, world!" }
 
 Badges (update <owner>/<repo> after pushing):
-![CI](https://github.com/<owner>/<repo>/actions/workflows/ci.yml/badge.svg)
-[![CodeQL](https://github.com/<owner>/<repo>/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/<owner>/<repo>/security/code-scanning)
+![CI](https://https://github.com/Bhandarynidhi/Internshipdemo/actions/workflows/ci.yml/badge.svg)
+[![CodeQL](https://https://github.com/Bhandarynidhi/Internshipdemo/actions/workflows/codeql-analysis.yml/badge.svg)](https://https://github.com/Bhandarynidhi/Internshipdemo/security/code-scanning)
