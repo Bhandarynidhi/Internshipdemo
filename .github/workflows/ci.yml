@@ -36,14 +36,14 @@ jobs:
         pip install bandit
         bandit -r . -f json -o bandit.json || true
         python - <<'PY'
-import json, sys
-with open('bandit.json') as f:
-    d = json.load(f)
-high = [i for i in d.get('results', []) if i.get('issue_severity') == 'HIGH']
-if high:
-    print("Bandit HIGH findings:")
-    for h in high:
-        print(f"- {h.get('issue_text')} ({h.get('filename')}:{h.get('line_number')})")
-    sys.exit(1)
-print("No HIGH bandit issues")
-PY
+        import json, sys
+        with open('bandit.json') as f:
+            d = json.load(f)
+        high = [i for i in d.get('results', []) if i.get('issue_severity') == 'HIGH']
+        if high:
+            print("Bandit HIGH findings:")
+            for h in high:
+                print(f"- {h.get('issue_text')} ({h.get('filename')}:{h.get('line_number')})")
+            sys.exit(1)
+        print("No HIGH bandit issues")
+        PY
